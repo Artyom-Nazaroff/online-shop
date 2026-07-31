@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+
+# IDE & AI tools
+.vscode/
+.idea/
+.agents/
+.claude/
+.windsurf/
+
+# Dependencies & Build
+**/node_modules/
+**/dist/
+**/build/
+**/coverage/
+**/generated/
+
+# Environment
+**/.env
+**/.env.*
+!**/.env.example
+
+# Logs
+*.log
