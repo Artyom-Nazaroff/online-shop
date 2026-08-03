@@ -7,10 +7,10 @@ import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20'
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private configService: ConfigService) {
     super({
-      clientID: configService.get('GOOGLE_CLIENT_ID'),
-      clientSecret: configService.get('GOOGLE_CLIENT_SECRET'),
+      clientID: configService.getOrThrow('GOOGLE_CLIENT_ID'),
+      clientSecret: configService.getOrThrow('GOOGLE_CLIENT_SECRET'),
       callbackURL:
-        configService.get('SERVER_URL') + '/auth/google/callback',
+        configService.getOrThrow('SERVER_URL') + '/auth/google/callback',
       scope: ['profile', 'email']
     })
   }
@@ -24,9 +24,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     const { displayName, emails, photos } = profile
 
     const user = {
-      email: emails[0].value,
+      email: emails![0].value,
       name: displayName,
-      picture: photos[0].value
+      picture: photos![0].value
     }
 
     done(null, user)

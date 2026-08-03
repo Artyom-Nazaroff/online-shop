@@ -11,7 +11,11 @@ async function bootstrap() {
     credentials: true,
     exposedHeaders: 'Set-Cookie'
   })
-  await app.listen(process.env.SERVER_URL ?? 5000)
-  console.log(`Server is running: ${process.env.SERVER_URL}`)
+
+  const serverUrl = process.env.SERVER_URL ?? 'http://localhost:5000'
+  const port = new URL(serverUrl).port
+
+  await app.listen(Number(port))
+  console.log(`Server is running: ${serverUrl}`)
 }
 bootstrap()

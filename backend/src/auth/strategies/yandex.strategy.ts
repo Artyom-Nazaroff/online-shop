@@ -7,12 +7,12 @@ import { Profile, Strategy } from 'passport-yandex'
 export class YandexStrategy extends PassportStrategy(Strategy, 'yandex') {
   constructor(private configService: ConfigService) {
     super({
-      clientID: configService.get('YANDEX_CLIENT_ID'),
-      clientSecret: configService.get('YANDEX_CLIENT_SECRET'),
+      clientID: configService.getOrThrow('YANDEX_CLIENT_ID'),
+      clientSecret: configService.getOrThrow('YANDEX_CLIENT_SECRET'),
       callbackURL:
-        configService.get('SERVER_URL') + '/auth/yandex/callback',
+        configService.getOrThrow('SERVER_URL') + '/auth/yandex/callback',
       scope: ['profile', 'email']
-    })
+    } as any)
   }
 
   async validate(
@@ -24,9 +24,9 @@ export class YandexStrategy extends PassportStrategy(Strategy, 'yandex') {
     const { username, emails, photos } = profile
 
     const user = {
-      email: emails[0].value,
+      email: emails![0].value,
       name: username,
-      picture: photos[0].value
+      picture: photos![0].value
     }
 
     done(null, user)
